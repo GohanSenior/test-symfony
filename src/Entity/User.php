@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -38,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $Firstname = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $Adress = null;
+    private ?string $Address = null;
 
     #[ORM\Column(length: 5)]
     private ?string $Zipcode = null;
@@ -48,6 +50,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: "datetime_immutable", options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $Created_at = null;
+
+    public function __construct()
+    {
+        $this->Created_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -143,14 +150,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAdress(): ?string
+    public function getAddress(): ?string
     {
-        return $this->Adress;
+        return $this->Address;
     }
 
-    public function setAdress(string $Adress): static
+    public function setAddress(string $Address): static
     {
-        $this->Adress = $Adress;
+        $this->Address = $Address;
 
         return $this;
     }
