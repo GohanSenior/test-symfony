@@ -19,6 +19,7 @@ class Category
     private ?string $Name = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'categories')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?self $Parent = null;
 
     /**
