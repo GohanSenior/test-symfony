@@ -33,11 +33,12 @@
 				{{ form_row(registrationForm.RGPDConsent) }}
 
 				<button type="submit" class="btn btn-primary btn-lg my-3">S'inscrire</button>
+				<p>Déjà un compte ?
+					<a href="{{ path('app_login') }}">Connectez-vous</a>
+				</p>
 				{{ form_end(registrationForm) }}
 
 			</div>
 		</div>
 	</section>
-
-
 {% endblock %}
